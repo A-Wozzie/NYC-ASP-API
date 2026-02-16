@@ -1,0 +1,19 @@
+{
+  "name": "nyc-asp-service",
+  "version": "1.0.0",
+  "description": "Caching proxy for NYC alternate side parking status via the NYC 311 API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": ["nyc", "parking", "alternate-side"],
+  "author": "PixelVista LLC",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
