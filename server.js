@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -77,12 +78,18 @@ app.use((req, res, next) => {
 });
 
 // ─── Auth Middleware ────────────────────────────────────────────────────────
-// Clients must send: Authorization: Bearer <API_TOKEN>
-// Applied to /api/* routes only — /health stays open for uptime monitors
+// Clients must send: Authorization: Bearer <API_TOKEN> or ?token=<API_TOKEN>
+// Same-origin requests from the web frontend are allowed without a token.
+// /health stays open for uptime monitors.
 
 function requireAuth(req, res, next) {
   if (!API_TOKEN) {
     console.warn('[WARN] API_TOKEN not set — auth is disabled');
+    return next();
+  }
+
+  // Allow same-origin requests from our own web frontend (browser-set header, not spoofable via JS)
+  if (req.headers['sec-fetch-site'] === 'same-origin') {
     return next();
   }
 
@@ -124,6 +131,10 @@ function getParkingForDay(dayIndex) {
     exceptionName: parking.exceptionName || null,
   };
 }
+
+// ─── Static Files ──────────────────────────────────────────────────────────
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 // ─── Routes ─────────────────────────────────────────────────────────────────
 
