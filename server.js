@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3000;
 const NYC_API_URL = 'https://api.nyc.gov/public/api/GetCalendar';
 const NYC_API_KEY = process.env.NYC_API_KEY; // NYC 311 API key
 const API_TOKEN = process.env.API_TOKEN; // Shared secret for client auth
-const POLL_INTERVAL_MS = 2 * 60 * 1000; // 2 minutes
+const POLL_INTERVAL_MS = 2 * 60 * 1000; // 2 minutes default
 
 // ─── In-Memory Cache ────────────────────────────────────────────────────────
 
@@ -82,21 +82,23 @@ app.use((req, res, next) => {
 
 function requireAuth(req, res, next) {
   if (!API_TOKEN) {
-    // If no token is configured, auth is disabled (dev/testing convenience)
     console.warn('[WARN] API_TOKEN not set — auth is disabled');
     return next();
   }
 
+  // Check Authorization header first, then fall back to ?token= query param
   const authHeader = req.headers.authorization;
+  let token;
 
-  if (!authHeader) {
-    return res.status(401).json({ error: 'Missing Authorization header' });
+  if (authHeader) {
+    const [scheme, headerToken] = authHeader.split(' ');
+    if (scheme === 'Bearer') token = headerToken;
+  } else {
+    token = req.query.token;
   }
 
-  const [scheme, token] = authHeader.split(' ');
-
-  if (scheme !== 'Bearer' || token !== API_TOKEN) {
-    return res.status(403).json({ error: 'Invalid or expired token' });
+  if (!token || token !== API_TOKEN) {
+    return res.status(403).json({ error: 'Invalid or missing token' });
   }
 
   next();
