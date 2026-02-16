@@ -5,9 +5,9 @@ const PORT = process.env.PORT || 3000;
 // ─── Configuration ──────────────────────────────────────────────────────────
 
 const NYC_API_URL = 'https://api.nyc.gov/public/api/GetCalendar';
-const NYC_API_KEY = process.env.NYC_API_KEY; // NYC 311 API key
+const NYC_API_KEY = process.env.NYC_API_KEY;
 const API_TOKEN = process.env.API_TOKEN; // Shared secret for client auth
-const POLL_INTERVAL_MS = 2 * 60 * 1000; // 2 minutes default
+const POLL_INTERVAL_MS = 2 * 60 * 1000; // 2 minutes
 
 // ─── In-Memory Cache ────────────────────────────────────────────────────────
 
@@ -53,7 +53,7 @@ async function fetchFromNYC() {
     lastError = null;
     consecutiveErrors = 0;
 
-    console.log(`[${lastFetched}] Fetched NYC calendar data for ${fromDate} – ${toDate}`);
+    console.log(`[${lastFetched}] Fetched NYC calendar data for ${fromDate} (${getParkingForDay(0)?.status || 'N/A'}) – ${toDate} (${getParkingForDay(1)?.status || 'N/A'})`);
   } catch (err) {
     consecutiveErrors++;
     lastError = err.message;
