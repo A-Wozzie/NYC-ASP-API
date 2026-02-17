@@ -212,7 +212,7 @@
       color: var(--text-muted);
     }
 
-    /* Status accent bar on left edge */
+    /* Status accent bar on left edge (tomorrow card) */
     .day-card::before {
       content: '';
       position: absolute;
@@ -225,13 +225,26 @@
       transition: background 0.4s ease;
     }
 
-    .day-card.suspended::before { background: var(--green-mid); }
-    .day-card.in-effect::before { background: var(--red-mid); }
-    .day-card.not-in-effect::before { background: var(--green-mid); }
+    /* Today card: full colored border instead of left bar */
+    .day-card:first-child::before { display: none; }
+    .day-card:first-child {
+      border: 2px solid var(--card-border);
+      transition: border-color 0.4s ease;
+    }
+
+    .day-card:first-child.suspended { border-color: var(--green-mid); }
+    .day-card:first-child.in-effect { border-color: var(--red-mid); }
+    .day-card:first-child.not-in-effect { border-color: var(--green-mid); }
+    .day-card:first-child.stale { border-color: var(--yellow-mid); }
+
+    /* Tomorrow card: left accent bar */
+    .day-card:nth-child(2).suspended::before { background: var(--green-mid); }
+    .day-card:nth-child(2).in-effect::before { background: var(--red-mid); }
+    .day-card:nth-child(2).not-in-effect::before { background: var(--green-mid); }
 
     /* Stale overlay – dims cards and recolors accent */
     .day-card.stale { opacity: 0.7; }
-    .day-card.stale::before { background: var(--yellow-mid); }
+    .day-card:nth-child(2).stale::before { background: var(--yellow-mid); }
     .day-card.stale .status { color: var(--yellow-bright); }
 
     .stale-banner {
