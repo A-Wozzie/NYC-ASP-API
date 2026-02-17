@@ -265,6 +265,24 @@
       margin-bottom: 0.25rem;
     }
 
+    .disclaimer {
+      max-width: 520px;
+      margin: 1rem auto 0;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      font-size: 0.7rem;
+      line-height: 1.6;
+      text-align: left;
+      opacity: 0.7;
+    }
+
+    @media (min-width: 640px) {
+      .disclaimer {
+        max-width: 760px;
+      }
+    }
+
     /* ── Loading / Error states ────────────────────────────────── */
 
     .loading {
@@ -313,7 +331,7 @@
   <div class="container">
     <header>
       <h1><span id="stayText">Stay</span> <em>or</em> <span id="goText">Go</span></h1>
-      <p>NYC Alternate Side Parking Status</p>
+      <p>NYC Alternate Side Parking</p>
     </header>
 
     <div class="stale-banner" id="staleBanner">⚠ Data may be out of date — last updated <span id="staleTime"></span></div>
@@ -326,7 +344,7 @@
   <footer>
     <div class="refresh-time" id="refreshTime"></div>
     <div>Data from NYC 311 · Updates every 2 minutes</div>
-    <div>DISCLAIMER: This site displays alternate side parking status as reported by the NYC 311 Public API. Data is provided on an "as is" basis and may be delayed, incomplete, or inaccurate. Always verify parking rules by checking posted street signs and official NYC sources. The developers of this site make no guarantees regarding the accuracy, reliability, or timeliness of the information displayed, and accept no responsibility for parking tickets, towing, fines, or any other financial or personal loss arising from the use of this site. This site is not affiliated with, endorsed by, or connected to the City of New York or any of its agencies.</div>
+    <div class="disclaimer">This site displays alternate side parking status as reported by the NYC 311 Public API. Data is provided on an "as is" basis and may be delayed, incomplete, or inaccurate. This site is not affiliated with, endorsed by, or connected to the City of New York or any of its agencies. Always verify parking rules by checking posted street signs and official NYC sources. The developers of this site make no guarantees regarding the accuracy, reliability, or timeliness of the information displayed, and accept no responsibility for parking tickets, towing, fines, or any other financial or personal loss arising from the use of this site.</div>
   </footer>
 
   <script>
